@@ -25,7 +25,6 @@ public class S3Store implements BlobStore {
     public void put(Blob blob) throws IOException {
         ObjectMetadata metaData = new ObjectMetadata();
         metaData.addUserMetadata("content-type",blob.contentType);
-        System.out.println("hit it! sergei: "+blob.name);
         this.s3Client.putObject(this.s3BucketName,blob.name,blob.inputStream,metaData);
     }
 

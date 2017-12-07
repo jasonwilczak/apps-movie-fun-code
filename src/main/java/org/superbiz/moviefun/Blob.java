@@ -1,5 +1,7 @@
 package org.superbiz.moviefun;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class Blob {
@@ -12,4 +14,10 @@ public class Blob {
         this.inputStream = inputStream;
         this.contentType = contentType;
     }
-}
+
+    public Blob(String name, byte[] content, String contenttype) {
+        this.name = name;
+        this.contentType = contenttype;
+        this.inputStream = new ByteArrayInputStream(content);
+        }
+    }

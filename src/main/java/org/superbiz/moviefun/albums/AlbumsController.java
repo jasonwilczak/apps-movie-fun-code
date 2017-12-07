@@ -59,8 +59,12 @@ public class AlbumsController {
     @GetMapping("/{albumId}/cover")
     public HttpEntity<byte[]> getCover(@PathVariable long albumId) throws IOException, URISyntaxException {
         Optional<Blob> maybeCoverBlob = blobStore.get(getCoverFileName(albumId));
-        Blob coverBlob = maybeCoverBlob.orElseGet(this::buildDefaultCoverBlob);
+
+        Optional<Blob> optBlob = maybeCoverBlob ==null ? Optional.of(buildDefaultCoverBlob()):maybeCoverBlob;
+        Blob coverBlob = optBlob.get();
+
         byte[] imageBytes = IOUtils.toByteArray(coverBlob.inputStream);
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(coverBlob.contentType));
         return new HttpEntity<>(imageBytes, headers);
